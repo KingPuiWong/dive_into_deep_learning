@@ -18,22 +18,22 @@ data = pd.read_csv(datafile)  # 可以看到原始表格中的空值NA被识别�
 print('1.原始数据:\n', data)
 
 inputs, outputs = data.iloc[:, 0: 2], data.iloc[:, 2]
-inputs = inputs.fillna(inputs.mean())  # 用均值填充NaN
-print(inputs)
+inputs = inputs.fillna(inputs.mean(numeric_only=True))  # 用均值填充NaN
+print('2.填充后的数据:\n', inputs)
 print(outputs)
 # 利用pandas中的get_dummies函数来处理离散值或者类别值。
 # [对于 inputs 中的类别值或离散值，我们将 “NaN” 视为一个类别。] 由于 “Alley”列只接受两种类型的类别值 “Pave” 和 “NaN”
 inputs = pd.get_dummies(inputs, dummy_na=True)
-print('2.利用pandas中的get_dummies函数处理:\n', inputs)
+print('3.利用pandas中的get_dummies函数处理:\n', inputs)
 
 x, y = torch.tensor(inputs.values), torch.tensor(outputs.values)
-print('3.转换为张量：')
+print('4.转换为张量：')
 print(x)
 print(y)
 
 # 扩展填充函数fillna的用法
 df1 = pd.DataFrame([[1, 2, 3], [NaN, NaN, 2], [NaN, NaN, NaN], [8, 8, NaN]])  # 创建初始数据
-print('4.函数fillna的用法：')
+print('5.函数fillna的用法：')
 print(df1)
 print(df1.fillna(100))  # 用常数填充 ，默认不会修改原对象
 print(df1.fillna({0: 10, 1: 20, 2: 30}))  # 通过字典填充不同的常数，默认不会修改原对象
@@ -43,6 +43,8 @@ print(df1.fillna(method='ffill'))  # 用前面的值来填充
 df2 = pd.DataFrame(np.random.randint(0, 10, (5, 5)))  # 随机创建一个5*5
 df2.iloc[1:4, 3] = NaN
 df2.iloc[2:4, 4] = NaN  # 指定的索引处插入值
+print('6.函数fillna的用法：')
+print('6.1.函数fillna的用法：')
 print(df2)
 print(df2.fillna(method='bfill', limit=2))  # 限制填充个数
 print(df2.fillna(method="ffill", limit=1, axis=1))  #
