@@ -28,6 +28,9 @@ print('3.利用pandas中的get_dummies函数处理:\n', inputs)
 
 x, y = torch.tensor(inputs.values), torch.tensor(outputs.values)
 print('4.转换为张量：')
+x, y = torch.tensor(inputs.values.astype(float)), torch.tensor(
+    outputs.values.astype(float)
+)
 print(x)
 print(y)
 
